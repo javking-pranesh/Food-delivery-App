@@ -9,18 +9,42 @@ const StoreContextProvider = (props) =>{
     const [token, setToken] = useState("");
     const [food_list,setFoodList] = useState([]);
 
-    const addToCart= (itemId)=>{
-        if(! cartItems[itemId]){
-            setCartItems((prev)=>({...prev,[itemId]:1}))
+    const addToCart = async (itemId) => {
+        if (!token) {
+            if (!cartItems[itemId]) {
+            setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
+            } else {
+            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+            }
+            return;
         }
-        else{
-            setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
-        }
-    }
+        const response = await axios.post(
+            url + "/api/cart/add",
+            { itemId },
+            { headers: { token } }
+        );
 
-    const removeFromCart = (itemId)=>{
-        setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
-    }
+        if (response.data.success) {
+            setCartItems(response.data.cartData);
+        }
+    };
+
+    const removeFromCart = async (itemId) => {
+        if (!token) {
+            setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+            return;
+        }
+
+        const response = await axios.post(
+            url + "/api/cart/remove",
+            { itemId },
+            { headers: { token } }
+        );
+
+        if (response.data.success) {
+            setCartItems(response.data.cartData);
+        }
+    };
 
     const getTotalCartAmount = ()=>{
         let totalAmount=0;
@@ -37,6 +61,11 @@ const StoreContextProvider = (props) =>{
         const response = await axios.get(url+"/api/food/list");
         setFoodList(response.data.data)
     }
+
+    const loadCartData = async (token) =>{
+        const response = await axios.post(url+"/api/cart/get",{},{headers:{token}})
+        setCartItems(response.data.cartData);
+    }
     
     useEffect(()=>{
         
@@ -44,6 +73,7 @@ const StoreContextProvider = (props) =>{
             await fetchFoodList();
             if(localStorage.getItem("token")){
             setToken(localStorage.getItem("token"));
+            await loadCartData(localStorage.getItem("token"));
         }
         }
         loadData();

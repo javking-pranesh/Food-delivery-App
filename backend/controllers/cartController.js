@@ -3,7 +3,6 @@ import userModel from "../models/userModel.js";
 // Add item to cart
 const addToCart = async (req, res) => {
   try {
-    console.log("req.body:", req.body);
 
     const userData = await userModel.findById(req.body.userId);
 
