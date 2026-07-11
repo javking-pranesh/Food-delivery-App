@@ -41,7 +41,9 @@
     background-color: gray;
     border: none;
 }
-
+.footer-content .logo{
+    width: 150px;
+}
 @media (max-width: 750px){
     .footer-content{
         display: flex;
@@ -51,4 +53,7 @@
     .footer-copyright{
         text-align: center;
     }
+    .footer-content .logo{
+    width: 120px;
+}
 }
