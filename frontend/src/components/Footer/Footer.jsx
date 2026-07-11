@@ -16,7 +16,7 @@ const Footer = () => {
             </div>
         </div>
         <div className="footer-content-center">
-            <h2>TOMATO</h2>
+            <h2>JP Foods</h2>
             <ul>
                 <li>Home</li>
                 <li>About</li>
@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
       </div>
       <hr />
-      <p className="footer-copyright">Copyright 2026 &copy; Tomato.com All right Reserved. </p>
+      <p className="footer-copyright">Copyright 2026 &copy; jpfoods.vercel.app All right Reserved. </p>
     </div>
   )
 }
