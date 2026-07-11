@@ -11,10 +11,6 @@ import userRouter from "./routes/userRoute.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 
-
-
-
-
 // app config
 const app = express()
 const port = process.env.PORT || 4000;
@@ -24,7 +20,6 @@ app.use(express.json())
 app.use(cors())
 
 //db Connection
-
 connectDB();
 
 // api endpoints
